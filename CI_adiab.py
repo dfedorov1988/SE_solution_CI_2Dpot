@@ -175,7 +175,8 @@ def buildOverlapMatrix(max_m, max_n, b, zeros, L, c, eps):
     
     overlap_cfunc = ctypes.CDLL(os.path.abspath('overlap.so'))
     overlap_cfunc.f.restype = ctypes.c_double
-    overlap_cfunc.f.argtypes = (ctypes.c_int, ctypes.POINTER(ctypes.c_double), ctypes.c_void_p)
+    overlap_cfunc.f.argtypes = (ctypes.c_int, ctypes.POINTER(ctypes.c_double),\
+                                ctypes.c_void_p)
     mn1 = ctypes.c_double * 7 # array to pass to the c library (m1, n1, m2, n2, b)   
     
     for m1 in range(-max_m, max_m+1):
