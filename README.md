@@ -13,6 +13,6 @@ by Bessel functions to take advantage of the radial symmetry of the system.
 Integration of matrix elements over angle is performed in Mathematica (see notebook for 
 derivation of integrals), integration over r is performed numerically.
 # How to Run
-Program is written in python 3.
+The program is written in python 3, file to run is adiab.py, where you can also change parameters for potential and basis set.
 Because we need to calculate a lot of integrals numerically, the radial parts of integrals are written and precompiled in C language to spped up calculations. Gives a 5X speedup. Requires V11.so,
 V2.so, T1.so, etc. in the working directory (need to be compiled on your machine).
