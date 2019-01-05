@@ -19,7 +19,7 @@ derivation of integrals).
 functions are written and precompiled in c language. Gives a 5X speedup. Requires V11.so,
 V2.so, T1.so, etc. in the working directory.
 
-@author: Dmitry A. Fedorov
+@author:Dmitry A. Fedorov
 '''
 
 #!/usr/local/bin/python3.6
