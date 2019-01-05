@@ -5,6 +5,8 @@ the 2D Jahn-Teller model (similar to C. Xie et al., Phys. Rev. A 95, 022104, (20
 The main goal of the project is to prove that the electron density at the conical intersection doesn't have 
 to be 0 in both diabatic and adiabatic representations. The introduction to this problem can be found in:
 G. Meek and B. Levine J. Chem. Phys. 144, 184109 (2016).
+# Citations
+The paper based on this work is currently under review in the Journal of Chemical Physics, citation will be added as soon as it is available.
 # Features
 Solves Schrodinger equation around conical intersection using the direct Hamiltonian diagonalization, basis set is represented 
 by Bessel functions to take advantage of the radial symmetry of the system. 
