@@ -130,21 +130,6 @@ Maximum m = {}\nMaximum n = {}\nb = {}\
         
         i = 0
         E = mainDiabatic(max_m + 2*i, max_n + 2*i, zeros, b, L, c, delta, reducedBasis, representation, stateToCompute)
-#         convergenceTolerance = 1E-6
-#         groundStateEnergy, groundStateEnergyPreviousStep = 2000, 1000          
-#         while abs(groundStateEnergy - groundStateEnergyPreviousStep) > convergenceTolerance: 
-#                 
-#             groundStateEnergyPreviousStep = groundStateEnergy
-#             print("m = {}, n = {}".format(max_m+i, max_n+i))
-#             E = mainDiabatic(max_m, max_n + i, zeros, b, L, c, delta, reducedBasis, representation, stateToCompute)
-#             groundStateEnergy = E[0]
-#             i += 10                  
-#             print("\nElapsed time = {0:.2f} s".format(time.process_time() - absoluteZeroTime)) 
-#         print("\nGround state energy converged with the tolerance = {}".format(convergenceTolerance))       
-#         np.savetxt("E_L{}_c{}.txt".format(L,c), E, header='Parameters used: b= {}, L = {},\
-#                     c = {}, delta = {}, reducedBasis = {}\
-#                    \nFirst row contains number of basis functions'.\
-#                    format(b, L, c, delta, reducedBasis), fmt='%1.8E')
         
     absoluteEndTime = time.process_time()
     print("\nTotal execution time is {0:.2f} s\n".format(absoluteEndTime-absoluteZeroTime))
