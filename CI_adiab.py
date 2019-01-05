@@ -43,15 +43,15 @@ def main():
     """Main module. Initialization of variables and calls either Diabatic or Adiabatic module"""
     
     absoluteZeroTime = time.process_time()
-    max_m = 3   # Max order m of the Bessel basis functions, -m_max<m<max_m
-    max_n = 4   # Max number of roots n of the Bessel basis functions, 1 < n < max_n
+    max_m = 2   # Max order m of the Bessel basis functions, -m_max<m<max_m
+    max_n = 13   # Max number of roots n of the Bessel basis functions, 1 < n < max_n
                   # Basis will contain (m+1)*n total basis functions  
     b = 8        # Limit of integration (at r=b all basis functions are zero)
-    L = 2         # Shift of the potential from the origin on x axis 
+    L = 6         # Shift of the potential from the origin on x axis 
     c = L/2       # k parameter in V12 = k*y coupling term, 
                   # in adiabatic representation c=L/2 makes equations easier
     delta = 0.00   # shift of one of the parabolas
-    reducedBasis = 1 # 0 - full basis, 1 - reduced basis
+    reducedBasis = 0 # 0 - full basis, 1 - reduced basis
     representation = "diabatic" 
     zerosToCompute = 500
     eps = 1e-12 # the integration limit for divergent integrals
