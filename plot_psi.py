@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-"""Plots two components of density in adiabatic representation"""
+"""Plots two components of density in adiabatic representation
+    takes separate text files as input with X, Y, psiI, psiJ matrices"""
 
 X = np.loadtxt("x.dat")
 Y = np.loadtxt("y.dat")
