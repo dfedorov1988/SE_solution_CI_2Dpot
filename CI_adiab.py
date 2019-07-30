@@ -46,17 +46,17 @@ def main():
     """
 
     absoluteZeroTime = time.process_time()
-    max_m = 2  # Max order m of the Bessel basis functions, -m_max <m < max_m
-    max_n = 18  # Max number of roots n of the Bessel basis functions,\
+    max_m = 3  # Max order m of the Bessel basis functions, -m_max <m < max_m
+    max_n = 12  # Max number of roots n of the Bessel basis functions,\
     # 1 < n < max_n\
     # Basis will contain (m+1)*n total basis functions
     b = 8  # Limit of integration (at r=b all basis functions are zero)
-    L = 6  # Shift of the potential from the origin on x axis
+    L = 2  # Shift of the potential from the origin on x axis
     c = L/2  # k parameter in V12 = k*y coupling term,
     # in adiabatic representation c=L/2 makes equations easier
     delta = 0.00  # shift of one of the parabolas
     reducedBasis = 0  # 0 - full basis, 1 - reduced basis
-    representation = "diabatic"
+    representation = "adiabatic"
     zerosToCompute = 500
     eps = 1e-12  # the integration limit for divergent integrals
     iterNumber = 1  # number of iterations to do with different eps
@@ -97,8 +97,7 @@ def main():
             # Seems to be doing what we want
 
             H, C, coeff, cs = mainAdiabatic(max_m, max_n, b, zeros, L, c,
-                                            delta, eps, S, S_T,
-                                            reduced_S_eigenvecs)
+                                            delta, eps)
 
             C_T = transformMatrix(reduced_S_eigenvecs, C)
             C_T_eigenvals, C_T_eigenvecs = lin.eigh(C_T, b=S_T)
@@ -126,12 +125,12 @@ def main():
                                                    eigenvecs_T2, coeff,
                                                    C_T_eigenvecs_reduced,
                                                    reducedBasis,
-                                                   stateToCompute)
+                                                   stateToCompute)[0]
 
             print("\nDensity at Origin: {0:1.2e}".format(densityAtOrigin))
             calculateDensity(b, dim, zeros, eigenvecs_T2, coeff,
                              C_T_eigenvecs_reduced, reducedBasis,
-                             stateToCompute, n_grid=50, limit_plot=6)
+                             stateToCompute, n_grid=100, limit_plot=1.1)
 
 #             largeBasFuncComp(dim, coeff, eigenvecs_T2, cs)
 
@@ -149,8 +148,8 @@ def main():
         absoluteEndTime - absoluteZeroTime))
 
 
-def mainAdiabatic(max_m, max_n, b, zeros, L, c, delta, eps, S, S_T,
-                  reduced_S_eigenvecs):
+def mainAdiabatic(max_m, max_n, b, zeros, L, c, delta, eps):
+
     """
     The main module to construct and diagonalize Hamiltonian in adiabatic rep
     Compared to diabatic representation we have double amount of
@@ -160,10 +159,9 @@ def mainAdiabatic(max_m, max_n, b, zeros, L, c, delta, eps, S, S_T,
     """
 
     V, coeff, cs = calcPotEnAdiabaticRep(max_m, max_n, b, zeros, L, c, delta)
-    T1 = calcKinEnAdiabaticRep(max_m, max_n, b, zeros, L, c, eps, coeff)
-    T2 = calcKinEnAdiabaticRep(max_m, max_n, b, zeros, L, c, eps/1000, coeff)
+    T1 = calcKinEnAdiabaticRep(max_m, max_n, b, L, c, eps, coeff)
+    T2 = calcKinEnAdiabaticRep(max_m, max_n, b, L, c, eps/1000, coeff)
     H = T1 + V
-#     H2 = T2 + V
     C = T2 - T1
 
     return(H, C, coeff, cs)
@@ -186,8 +184,6 @@ def buildOverlapMatrix(max_m, max_n, b, zeros, L, c, eps):
     print("\nCalculating overlap matrix:\n")
     dim = 2 * max_m * max_n + max_n
     S = np.zeros((4*dim, 4*dim))
-#     tmpm = np.zeros((4*dim))
-#     tmpn = np.zeros((4*dim))
 
     kk = 0
     # this array allows to convert k to m,n
@@ -269,7 +265,7 @@ def buildOverlapMatrix(max_m, max_n, b, zeros, L, c, eps):
     # Hamiltonian matrix
 
     S_eigenvals, S_eigenvecs = lin.eigh(S)
-    indicesAboveThreshold = np.abs(S_eigenvals) > 1e-3
+    indicesAboveThreshold = np.abs(S_eigenvals) > 1e-7
 #     print(S_eigenvals)
     reduced_S_eigenvecs = S_eigenvecs[:, indicesAboveThreshold]
     reduced_S_eigenvals = S_eigenvals[indicesAboveThreshold]
@@ -291,7 +287,7 @@ def buildOverlapMatrix(max_m, max_n, b, zeros, L, c, eps):
     return(S, S_T, reduced_S_eigenvecs)
 
 
-def calcKinEnAdiabaticRep(max_m, max_n, b, zeros, L, c, eps, coeff):
+def calcKinEnAdiabaticRep(max_m, max_n, b, L, c, eps, coeff):
     """
     Calculates kinetic energy matrix elements in adiabatic representation:
     T = 1/2 * (d/dr^2 + 1/4r^2 + 1/r^2 * d/dphi^2)

@@ -1,6 +1,9 @@
 import numpy as np
 import scipy.special as sp
+from mpl_toolkits import mplot3d
 
+import numpy as np
+import matplotlib.pyplot as plt
 
 def calculateDensity(b, dim, zeros, eigenvecs_T2, coeff, transformationAB,
                      representation, nState, n_grid=50, limit_plot=6):
@@ -13,11 +16,13 @@ def calculateDensity(b, dim, zeros, eigenvecs_T2, coeff, transformationAB,
     coord = np.arange(-limit_plot, limit_plot, 2*limit_plot / n_grid)
     prob_dens = np.zeros((n_grid*n_grid, 5))
     prob_dens_mat, x_mat, y_mat = np.zeros((3, n_grid, n_grid))
+    psiI = np.zeros((n_grid, n_grid))
+    psiJ = np.zeros((n_grid, n_grid))
     inum = 0
 
-    for ix in range(n_grid-1):
+    for ix in range(n_grid):
         x = coord[ix]
-        for iy in range(n_grid-1):
+        for iy in range(n_grid):
             y = coord[iy]
 
             r = np.absolute(np.sqrt(np.square(x) + np.square(y)))
@@ -27,7 +32,7 @@ def calculateDensity(b, dim, zeros, eigenvecs_T2, coeff, transformationAB,
 #             print(x, y, phi*360/2/np.pi)
             prob_dens[inum, 0] = x
             prob_dens[inum, 1] = y
-            prob_dens[inum, 2]\
+            prob_dens[inum, 2], psiI[ix, iy], psiJ[ix, iy]\
                 = densityAtSinglePoint(r, phi, b, dim, zeros, eigenvecs_T2,
                                        coeff, transformationAB,
                                        representation, nState)
@@ -39,10 +44,13 @@ def calculateDensity(b, dim, zeros, eigenvecs_T2, coeff, transformationAB,
             inum += 1
 
     """Saving the coordinates and density"""
-    np.savetxt('x.dat', coord, fmt='%1.8E')
-    np.savetxt('y.dat', coord, fmt='%1.8E')
+    X, Y = np.meshgrid(coord, coord)
+    np.savetxt('x.dat', X, fmt='%1.8E')
+    np.savetxt('y.dat', Y, fmt='%1.8E')
     np.savetxt('Density_mat.dat', prob_dens_mat, fmt='%1.8E')
     np.savetxt('Density.dat', prob_dens, fmt='%1.8E')
+    np.savetxt('psiI.dat', psiI, fmt='%1.8E')
+    np.savetxt('psiJ.dat', psiJ, fmt='%1.8E')
 
     return (prob_dens)
 
@@ -81,7 +89,8 @@ def densityAtSinglePoint(r, phi, b, dim, zeros, eigenvecs_T2, coeff,
         totalDensity = np.dot(psiI, np.conjugate(psiI))\
             + np.dot(psiJ, np.conjugate(psiJ))
 
-    return(np.real(totalDensity))
+    return(np.real(totalDensity), np.dot(psiI, np.conjugate(psiI)),
+           np.dot(psiJ, np.conjugate(psiJ)))
 
 
 def largeBasFuncComp(dim, coeff, eigenvecs_T2, cs, numRootsToShow=10):
