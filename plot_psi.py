@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+"""Plots two components of density in adiabatic representation"""
+
 X = np.loadtxt("x.dat")
 Y = np.loadtxt("y.dat")
 psiI = np.loadtxt("psiI.dat")
