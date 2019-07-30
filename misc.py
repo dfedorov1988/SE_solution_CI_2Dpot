@@ -3,7 +3,7 @@ import scipy.special as sp
 
 
 def calculateDensity(b, dim, zeros, eigenvecs_T2, coeff, transformationAB,
-                     representation, nState, n_grid=50, limit_plot=6):
+                     representation, nState, n_grid=50, limit_plot=5):
     """Calculates the density on the grid in Cartesian coordinates,
     prints out matrices x.dat, y.dat, Density_mat.dat, visualize elsewhere
     because matplotlib is not very good at 3D surfaces"""
