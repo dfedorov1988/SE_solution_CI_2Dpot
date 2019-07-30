@@ -140,7 +140,7 @@ def main():
     if representation == "diabatic":
 
         i = 0
-        mainDiabatic(max_m + 2*i, max_n + 2*i, zeros, b, L, c,
+        mainDiabatic(max_m, max_n, zeros, b, L, c,
                      delta, reducedBasis, representation, stateToCompute)
 
     absoluteEndTime = time.process_time()
