@@ -1,9 +1,6 @@
 import numpy as np
 import scipy.special as sp
-from mpl_toolkits import mplot3d
 
-import numpy as np
-import matplotlib.pyplot as plt
 
 def calculateDensity(b, dim, zeros, eigenvecs_T2, coeff, transformationAB,
                      representation, nState, n_grid=50, limit_plot=6):
