@@ -1,7 +1,9 @@
 # Wave function continuity around conical intersections
 This program solves the Schrodinger equation at the conical intersection using the basis of
-cylindrical basis functions in both diabatic and adiabatic representations. The model system is 
-the 2D Jahn-Teller model (similar to C. Xie et al., Phys. Rev. A 95, 022104, (2017)).
+cylindrical basis functions in both diabatic and adiabatic representations.
+The article can be found at https://aip.scitation.org/doi/10.1063/1.5058268
+
+The model system is the 2D Jahn-Teller model (similar to C. Xie et al., Phys. Rev. A 95, 022104, (2017)).
 The main goal of the project is to prove that the electron density at the conical intersection doesn't have 
 to be 0 in both diabatic and adiabatic representations. The introduction to this problem can be found in:
 G. Meek and B. Levine J. Chem. Phys. 144, 184109 (2016).
